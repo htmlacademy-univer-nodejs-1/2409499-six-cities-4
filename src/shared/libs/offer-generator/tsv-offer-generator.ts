@@ -26,7 +26,7 @@ export class TSVOfferGenerator implements OfferGenerator {
       City.Paris,
     ]);
     const previewPath = getRandomItem(this.mockData.previewPathes);
-    const photos = getRandomItems(this.mockData.photos);
+    const photos = getRandomItem(this.mockData.photos);
     const isPremium = getRandomItem([true, false]);
     const isFavorite = getRandomItem([true, false]);
     const rating = getRandomItem([1, 2, 3, 4, 5]);
@@ -39,8 +39,10 @@ export class TSVOfferGenerator implements OfferGenerator {
     const roomCount = getRandomItem([1, 2, 3, 4, 5, 6, 7, 8]);
     const guestCount = getRandomItem([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     const cost = generateRandomValue(MIN_PRICE, MAX_PRICE).toString();
-    const facilities = getRandomItem(this.mockData.facilities);
+    const facilities = getRandomItems(this.mockData.facilities).join(';');
     const author = getRandomItem(this.mockData.authors);
+    const email = getRandomItem(this.mockData.emails);
+    const avatarPath = getRandomItem(this.mockData.avatarPathes);
     const commentCount = getRandomItem(this.mockData.commentCounts);
     const coordinates = getRandomItem(this.mockData.coordinates);
 
@@ -50,7 +52,7 @@ export class TSVOfferGenerator implements OfferGenerator {
 
     return [title, summary, publicationDate, city, previewPath, photos,
       isPremium, isFavorite, rating, offerType, roomCount, guestCount,
-      cost, facilities, author, commentCount, coordinates,
+      cost, facilities, author, email, avatarPath, commentCount, coordinates,
     ].join('\t');
   }
 }

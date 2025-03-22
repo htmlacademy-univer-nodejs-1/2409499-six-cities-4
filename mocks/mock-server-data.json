@@ -22,11 +22,11 @@
       "hotel-3.png"
     ],
     "photos": [
-      "hotel-1-1.png;hotel-1-2.png;hotel-1-3.png;hotel-1-4.png;hotel-1-5.png;hotel-1-6.png;",
-      "apartments-1-1.png;apartments-1-2.png;apartments-1-3.png;apartments-1-4.png;apartments-1-5.png;apartments-1-6.png;",
-      "apartments-2-1.png;apartments-2-2.png;apartments-2-3.png;apartments-2-4.png;apartments-2-5.png;apartments-2-6.png;",
-      "hotel-2-1.png;hotel-2-2.png;hotel-2-3.png;hotel-2-4.png;hotel-2-5.png;hotel-2-6.png;",
-      "hotel-3-1.png;hotel-3-2.png;hotel-3-3.png;hotel-3-4.png;hotel-3-5.png;hotel-3-6.png;"
+      "hotel-1-1.png;hotel-1-2.png;hotel-1-3.png;hotel-1-4.png;hotel-1-5.png;hotel-1-6.png",
+      "apartments-1-1.png;apartments-1-2.png;apartments-1-3.png;apartments-1-4.png;apartments-1-5.png;apartments-1-6.png",
+      "apartments-2-1.png;apartments-2-2.png;apartments-2-3.png;apartments-2-4.png;apartments-2-5.png;apartments-2-6.png",
+      "hotel-2-1.png;hotel-2-2.png;hotel-2-3.png;hotel-2-4.png;hotel-2-5.png;hotel-2-6.png",
+      "hotel-3-1.png;hotel-3-2.png;hotel-3-3.png;hotel-3-4.png;hotel-3-5.png;hotel-3-6.png"
     ],
     "authors": [
       "Андрей Биба",
@@ -34,6 +34,20 @@
       "Анастасия Фасоль",
       "Маргарита Горох",
       "Иван Стул"
+    ],
+    "emails": [
+      "example1@mail.com",
+      "example3@mail.com",
+      "example4@mail.com",
+      "example9@mail.com",
+      "example5@mail.com"
+    ],
+    "avatarPathes": [
+      "author-1.png",
+      "author-2.png",
+      "author-3.png",
+      "author-4.png",
+      "author-5.png"
     ],
     "commentCounts": [
       "1",
