@@ -8,6 +8,7 @@ export class PinoLogger implements Logger {
 
   constructor() {
     this.logger = pino();
+    this.logger.info('Logger created…');
   }
 
   public debug(message: string, ...args: unknown[]): void {
