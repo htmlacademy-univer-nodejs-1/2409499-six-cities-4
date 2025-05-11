@@ -18,6 +18,7 @@ export class RestApplication {
     @inject(Component.ExceptionFilterInterface) private readonly exceptionFilter: ExceptionFilterInterface,
     @inject(Component.UserController) private readonly userController: BaseController,
     @inject(Component.OfferController) private readonly rentOfferController: BaseController,
+    @inject(Component.CommentController) private readonly commentController: BaseController,
   ) {
     this.server = express();
   }
@@ -45,6 +46,7 @@ export class RestApplication {
     this.logger.info('Controller init');
     this.server.use('/users', this.userController.router);
     this.server.use('/offers', this.rentOfferController.router);
+    this.server.use('/comments', this.commentController.router);
     this.logger.info('Controller completed');
   }
 
