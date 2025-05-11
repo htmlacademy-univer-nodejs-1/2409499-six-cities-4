@@ -25,6 +25,8 @@ paths:
           description: Пользователь успешно зарегистрирован
         400:
           description: Некорректный формат данных
+        409:
+          description: Пользователь с таким email уже существует
 
   /users/login:
     post:

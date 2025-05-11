@@ -12,7 +12,6 @@ export interface RentOfferServiceInterface {
     getDetailsInfo(offerId: string): Promise<DocumentType<RentOfferEntity> | null>;
     incCommentCount(offerId: string): Promise<DocumentType<RentOfferEntity> | null>;
     getPremium(): Promise<DocumentType<RentOfferEntity>[]>;
-    getFavorite(): Promise<DocumentType<RentOfferEntity>[]>;
     calculateRating(rating: number, newRating: number, countRating:number, offerId:string): Promise<void>;
     exists(documentId: string): Promise<boolean>;
 }

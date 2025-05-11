@@ -22,7 +22,7 @@ export default class RentOfferService implements RentOfferServiceInterface {
   }
 
   public async findById(offerId: string): Promise<DocumentType<RentOfferEntity> | null> {
-    return this.offerModel.findById(offerId).populate('offerId').exec();
+    return this.offerModel.findById(offerId).exec();
   }
 
   public async find(count?: number): Promise<DocumentType<RentOfferEntity>[]> {
@@ -31,7 +31,6 @@ export default class RentOfferService implements RentOfferServiceInterface {
       .find()
       .sort({createdAt: 1})
       .limit(limitCount)
-      .populate('offerId')
       .exec();
   }
 
@@ -40,7 +39,7 @@ export default class RentOfferService implements RentOfferServiceInterface {
   }
 
   public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<RentOfferEntity> | null> {
-    return this.offerModel.findByIdAndUpdate(offerId, dto, {new: true}).populate('offerId').exec();
+    return this.offerModel.findByIdAndUpdate(offerId, dto, {new: true}).exec();
   }
 
   public async getDetailsInfo(offerId: string): Promise<DocumentType<RentOfferEntity> | null> {
@@ -57,11 +56,7 @@ export default class RentOfferService implements RentOfferServiceInterface {
   }
 
   public async getPremium(): Promise<DocumentType<RentOfferEntity>[]> {
-    return this.offerModel.find({flagIsPremium: true}).populate('offerId').exec();
-  }
-
-  public async getFavorite(): Promise<DocumentType<RentOfferEntity>[]> {
-    return this.offerModel.find({flagIsFavourites: true}).populate('offerId').exec();
+    return this.offerModel.find({flagIsPremium: true}).exec();
   }
 
   public async calculateRating(rating: number, newRating: number, countRating: number, offerId: string): Promise<void> {
