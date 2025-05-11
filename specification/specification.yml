@@ -1,0 +1,302 @@
+openapi: 3.0.3
+info:
+  title: API для проекта «Шесть городов»
+  description: API для работы с платформой «Шесть городов».
+  version: 1.0.0
+
+servers:
+  - url: 'https'
+
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: Регистрация нового пользователя
+      description: Создает нового пользователя на платформе
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUser'
+        required: true
+      responses:
+        201:
+          description: Пользователь успешно зарегистрирован
+        400:
+          description: Некорректный формат данных
+
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Авторизация пользователя
+      description: Позволяет пользователю войти в систему, используя логин и пароль
+      responses:
+        201:
+          description: Успешный вход
+        400:
+          description: Некорректный формат данных
+
+    get:
+      tags:
+        - users
+      summary: Проверка авторизованного пользователя
+      description: Получение информации о текущем пользователе
+      responses:
+        200:
+          description: Успешная проверка состояния пользователя
+        400:
+          description: Некорректный формат данных
+
+  /termination:
+    get:
+      tags:
+        - users
+      summary: Выход из системы
+      description: Осуществляет выход пользователя из приложения
+      responses:
+        200:
+          description: Успешный выход
+        401:
+          description: Пользователь не авторизован
+
+  /offers:
+    post:
+      tags:
+        - offers
+      summary: Добавление нового предложения
+      description: Создание нового объявления на платформе
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createOffers'
+        required: true
+      responses:
+        201:
+          description: Предложение успешно создано
+        400:
+          description: Некорректный формат данных
+        401:
+          description: Пользователь не авторизован
+
+    put:
+      tags:
+        - offers
+      summary: Обновление предложения
+      description: Редактирование существующего объявления
+      responses:
+        200:
+          description: Предложение успешно обновлено
+        400:
+          description: Пользователь может редактировать только свои объявления
+        401:
+          description: Пользователь не авторизован
+
+    delete:
+      tags:
+        - offers
+      summary: Удаление предложения
+      description: Удаляет объявление пользователя
+      responses:
+        200:
+          description: Предложение удалено
+        400:
+          description: Пользователь может удалять только свои объявления
+        401:
+          description: Пользователь не авторизован
+
+  /offers/details:
+    get:
+      tags:
+        - offers
+      summary: Получение детальной информации по предложению
+      responses:
+        200:
+          description: Информация успешно получена
+
+  /offers?countRequests=60:
+    get:
+      tags:
+        - offers
+      summary: Список предложений
+      description: Получение списка предложений по аренде
+      responses:
+        200:
+          description: Список предложений успешно получен
+        401:
+          description: Пользователь не авторизован
+
+  /offers/premium:
+    get:
+      tags:
+        - offers
+      summary: Премиальные предложения по аренде
+      description: Получение списка премиальных предложений для города
+      responses:
+        200:
+          description: Получены премиальные предложения (не более 3)
+
+  /offers/favorite:
+    get:
+      tags:
+        - offers
+      summary: Список избранных предложений
+      description: Получение списка избранных объявлений пользователя
+      responses:
+        200:
+          description: Список избранных предложений успешно получен
+        401:
+          description: Пользователь не авторизован
+
+    post:
+      tags:
+        - offers
+      summary: Добавление в избранное
+      description: Добавление предложения в список избранных
+      responses:
+        201:
+          description: Предложение успешно добавлено в избранное
+        401:
+          description: Пользователь не авторизован
+
+    delete:
+      tags:
+        - offers
+      summary: Удаление из избранного
+      description: Удаление предложения из списка избранных
+      responses:
+        200:
+          description: Предложение успешно удалено из избранного
+        401:
+          description: Пользователь не авторизован
+
+  /comments?count=50:
+    get:
+      tags:
+        - comments
+      summary: Список комментариев
+      description: Получение списка комментариев для предложений
+      responses:
+        200:
+          description: Список комментариев успешно получен
+
+    post:
+      tags:
+        - comments
+      summary: Добавление нового комментария
+      description: Оставление комментария к предложению
+      responses:
+        201:
+          description: Комментарий успешно добавлен
+        400:
+          description: Некорректный формат данных
+        401:
+          description: Пользователь не авторизован
+
+tags:
+  - name: users
+    description: Операции с пользователями
+  - name: offers
+    description: Операции с предложениями
+  - name: comments
+    description: Операции с комментариями
+
+components:
+  schemas:
+    createUser:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "nikita.cool@domain.com"
+        name:
+          type: string
+          example: "Никита Никитин"
+        password:
+          type: string
+          example: "123456"
+        avatarPath:
+          type: string
+          example: "avatar.jpg"
+        userType:
+          type: string
+          example: "standard"
+
+    user:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "6329c3d6a04ab1061c6425ea"
+        email:
+          type: string
+          example: "nikita.cool@domain.com"
+
+    createOffers:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Квартира на мосту"
+        summary:
+          type: string
+          example: "Предлагаем квартиры и дома в центре города с отличным ремонтом и удобствами."
+        publicationDate:
+          type: string
+          example: "2024-09-06"
+        city:
+          type: string
+          example: "Амстердам"
+        previewPath:
+          type: string
+          example: "preview.jpg"
+        photos:
+          type: array
+          items:
+            type: string
+            example: "apartment-01.jpg"
+        isPremium:
+          type: boolean
+          example: true
+        isFavorite:
+          type: boolean
+          example: false
+        rating:
+          type: number
+          example: 4.8
+        offerType:
+          type: string
+          example: "Дом"
+        roomCount:
+          type: integer
+          example: 4
+        guestCount:
+          type: integer
+          example: 6
+        cost:
+          type: integer
+          example: 25000
+        facilities:
+          type: string
+          example: "Интернет, кондиционер"
+        author:
+          type: string
+          example: "Василий Васильев"
+        commentCount:
+          type: integer
+          example: 15
+        coordinates:
+          type: string
+          example: "55.7558;37.6176"
+
+    createComments:
+      type: object
+      properties:
+        text:
+          type: string
+          example: "Замечательная квартира"
+        author:
+          type: string
+          example: "Иван Иванов"
