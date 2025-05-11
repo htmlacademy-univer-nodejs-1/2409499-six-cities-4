@@ -25,12 +25,13 @@ export function createOffer(offerData: string): RentOffer {
     avatarPath,
     commentCount,
     coordinates,
-  ] = offerData.replace('\n', '').split('\t');
+  ] = offerData.replace('\n', '').replace('\r', '').split('\t');
 
   const author: User = {
     email,
     name,
-    avatarPath
+    avatarPath,
+    userType: 'standard',
   };
 
   const [latitude, longitude] = coordinates.split(';');

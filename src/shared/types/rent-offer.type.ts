@@ -13,10 +13,10 @@ export type RentOffer = {
     photos: string[];
     isPremium: boolean;
     isFavorite: boolean;
-    rating: number;
+    rating: 1 | 2 | 3 | 4 | 5;
     offerType: RentOfferType;
-    roomCount: number;
-    guestCount: number;
+    roomCount: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+    guestCount: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
     cost: number;
     facilities: Facility[];
     author: User;
