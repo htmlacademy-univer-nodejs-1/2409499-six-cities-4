@@ -8,11 +8,11 @@ import { ParamOfferId } from '../../../types/offer-param-id.js';
 import { Logger } from '../../../libs/logger/index.js';
 import { Component } from '../../../types/component.enum.js';
 import { RentOfferServiceInterface } from '../rent-offer-service.interface.js';
+import { CommentServiceInterface } from '../../comment/comments-service.interface.js';
 import { BaseController } from '../../../controller/base-controller.js';
 import { OfferRdo } from '../rdo/rent-offer.rdo.js';
 import CreateRentOfferDto from '../dto/create-rent-offer.dto.js';
 import { HttpError } from '../../../errors/http-error.js';
-import { CommentService } from '../../comment/comment.service.js';
 import { ValidateDtoMiddleware } from '../../../middleware/validate.middleware.js';
 import { ValidateObjectIdMiddleware } from '../../../middleware/validate-object-id.middleware.js';
 import { CommentRdo } from '../../comment/rdo/comment.rdo.js';
@@ -24,7 +24,7 @@ export default class OfferController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.RentOfferService) private readonly offersService: RentOfferServiceInterface,
-    @inject(Component.CommentServiceInterface) private readonly commentService: CommentService,
+    @inject(Component.CommentServiceInterface) private readonly commentService: CommentServiceInterface,
   ) {
     super(logger);
 
