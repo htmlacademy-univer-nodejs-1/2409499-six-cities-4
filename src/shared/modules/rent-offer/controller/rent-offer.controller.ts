@@ -8,14 +8,15 @@ import { ParamOfferId } from '../../../types/offer-param-id.js';
 import { Logger } from '../../../libs/logger/index.js';
 import { Component } from '../../../types/component.enum.js';
 import { RentOfferServiceInterface } from '../rent-offer-service.interface.js';
+import { CommentServiceInterface } from '../../comment/comments-service.interface.js';
 import { BaseController } from '../../../controller/base-controller.js';
 import { OfferRdo } from '../rdo/rent-offer.rdo.js';
 import CreateRentOfferDto from '../dto/create-rent-offer.dto.js';
 import { HttpError } from '../../../errors/http-error.js';
-import { CommentService } from '../../comment/comment.service.js';
 import { ValidateDtoMiddleware } from '../../../middleware/validate.middleware.js';
 import { ValidateObjectIdMiddleware } from '../../../middleware/validate-object-id.middleware.js';
 import { CommentRdo } from '../../comment/rdo/comment.rdo.js';
+import { ExistingDocumentMiddleware } from '../../../middleware/document-exists.middleware.js';
 
 
 @injectable()
@@ -23,7 +24,7 @@ export default class OfferController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.RentOfferService) private readonly offersService: RentOfferServiceInterface,
-    @inject(Component.CommentServiceInterface) private readonly commentService: CommentService,
+    @inject(Component.CommentServiceInterface) private readonly commentService: CommentServiceInterface,
   ) {
     super(logger);
 
@@ -33,19 +34,27 @@ export default class OfferController extends BaseController {
       path: '/',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateRentOfferDto)]
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+      ]
     });
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Get,
       handler: this.show,
-      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new ExistingDocumentMiddleware(this.offersService, 'Offer', 'offerId')
+      ]
     });
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Delete,
       handler: this.delete,
-      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new ExistingDocumentMiddleware(this.offersService, 'Offer', 'offerId')
+      ]
     });
     this.addRoute({
       path: '/:offerId',
@@ -54,6 +63,7 @@ export default class OfferController extends BaseController {
       middlewares: [
         new ValidateObjectIdMiddleware('offerId'),
         new ValidateDtoMiddleware(UpdateOfferDto),
+        new ExistingDocumentMiddleware(this.offersService, 'Offer', 'offerId'),
       ]
     });
     this.addRoute({
@@ -104,12 +114,10 @@ export default class OfferController extends BaseController {
     this.ok(res, fillDTO(OfferRdo, updatedOffer));
   }
 
-  public async show(_req: Request, _res: Response): Promise<void> {
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented',
-      'OfferController'
-    );
+  public async show({ params }: Request<ParamOfferId>, res: Response): Promise<void>{
+    const { offerId } = params;
+    const offer = await this.offersService.findById(offerId);
+    this.ok(res, fillDTO(OfferRdo, offer));
   }
 
   public async getComments({ params }: Request<ParamOfferId>, res: Response): Promise<void> {

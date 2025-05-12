@@ -7,7 +7,7 @@ import { CommentServiceInterface } from './comments-service.interface.js';
 import CommentController from './controller/comment.controller.js';
 
 
-export function CreateCommentContainer() {
+export function createCommentContainer() {
   const commentContainer = new Container();
   commentContainer.bind<CommentServiceInterface>(Component.CommentServiceInterface).to(CommentService).inSingletonScope();
   commentContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel);
